@@ -9,6 +9,7 @@
 | code | domains/code.md | 代码执行、Claude Code |
 | system | domains/system.md | 系统操作、文件管理 |
 | enterprise | domains/enterprise.md | 企业AI诊断、数字化转型（Phase 3 探索验证） |
+| general | domains/general.md | 通用模式、任务分解模板、降级策略（Phase 4） |
 
 ## 按任务类型索引
 
