@@ -246,7 +246,7 @@
     .hero-image-layer {
       position: absolute; right: 0; top: 0; width: 50%; height: 100%;
       opacity: 0.25;
-      background-image: url('images/crab-real-1.jpg');
+      background-image: url('images/crab-taizhou-main.jpg');
       background-size: cover; background-position: center;
       clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
@@ -620,7 +620,7 @@
         <!-- 优先显示真实产品图 -->
         <img
           class="hero-img"
-          src="images/crab-real-1.jpg"
+          src="images/crab-taizhou-main.jpg"
           alt="兴化大闸蟹 精品公蟹"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
         >
@@ -692,7 +692,7 @@
       <div class="origin-visual fade-up">
         <img
           class="origin-img"
-          src="images/crab-real-1.jpg"
+          src="images/crab-taizhou-main.jpg"
           alt="兴化大闸蟹养殖基地"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
         >
@@ -1094,7 +1094,7 @@ function renderProducts(filter) {
       <div class="product-img">
         <img
           class="real-img"
-          src="images/crab-product-${(i % 3) + 1}.jpg"
+          src="images/crab-xinhua-${((i % 2) + 1)}.jpg"
           alt="${p.name}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
         >
@@ -1141,7 +1141,7 @@ function renderGifts() {
       <div class="gift-img">
         <img
           class="real-img"
-          src="images/crab-product-${(i % 3) + 1}.jpg"
+          src="images/crab-xinhua-${((i % 2) + 1)}.jpg"
           alt="${g.name}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
         >
