@@ -8,6 +8,7 @@
 | web | domains/web.md | 搜索、网页抓取 |
 | code | domains/code.md | 代码执行、Claude Code |
 | system | domains/system.md | 系统操作、文件管理 |
+| enterprise | domains/enterprise.md | 企业AI诊断、数字化转型（Phase 3 探索验证） |
 
 ## 按任务类型索引
 
@@ -19,6 +20,7 @@
 | 发送消息 | 见 domains/feishu.md |
 | 执行代码 | 见 domains/code.md |
 | 文件处理 | 见 domains/system.md |
+| 企业AI诊断 | 见 domains/enterprise.md（Phase 3 探索验证：置信度 0.6→0.8，使用 enterprise-ai-diagnosis skill） |
 
 | 任务 | 成功率 | 推荐方法 |
 |------|--------|----------|

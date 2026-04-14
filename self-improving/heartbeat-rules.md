@@ -1,27 +1,21 @@
-# Heartbeat Rules — 工程控制论闭环自校正版
+# Heartbeat Rules — 工程控制论闭环自校正版 + Phase 3 自适应增强
 
 > 基于《工程控制论》STR 架构：每次 heartbeat = SENSE → THINK → EXECUTE → EVALUATE → LEARN 闭环循环
 
+---
+
 ## 核心状态机
 
-Agent 在每次心跳时处于以下状态之一：
-
 ```
-IDLE → PLANNING → EXECUTING → EVALUATING
-                        ↓            ↓
-                   ERROR_FATAL   LEARNED
-                        ↓
-                   RECOVERING → IDLE
+IDLE → PLANNING → EXECUTING → EVALUATING → LEARNED → IDLE
+                    ↓              ↓
+               EXPLORING ←—————→ ERROR_FATAL
+                    ↓
+               RECOVERING → IDLE
 ```
 
-**状态说明：**
-- `IDLE`：待命，无待处理任务
-- `PLANNING`：分析状态，制定执行计划
-- `EXECUTING`：执行计划
-- `EVALUATING`：评估执行结果，对比预期
-- `LEARNED`：总结经验，更新记忆，回归 IDLE
-- `ERROR_FATAL`：执行失败，进入恢复
-- `RECOVERING`：执行降级策略/修复，回归 IDLE
+**新增状态：**
+- `EXPLORING`：识别到未知任务/新领域，进入小范围试错模式
 
 ---
 
@@ -37,169 +31,171 @@ IDLE → PLANNING → EXECUTING → EVALUATING
 4. **上次执行结果**：从 `heartbeat-state.md` 读取 `last_outcome`
 5. **最近异常**：检查 `heartbeat-state.md` 的 `recent_errors[]`
 6. **时间上下文**：判断当前时段（早/午/晚/深夜）
+7. **探索模式**：检查 `heartbeat-state.md` 的 `exploration_mode` 和 `exploration_tasks[]`
 
-> 如果距离上次心跳 <5 分钟且状态为 IDLE，直接返回 `HEARTBEAT_OK`（防止抖动）
+> 如果距离上次心跳 <5 分钟且状态为 IDLE 且无探索任务 → 直接返回 `HEARTBEAT_OK`
 
 ---
 
 ### STEP 2 — THINK（决策）
 
-基于感知结果 + 历史经验，判断本次心跳应该做什么：
+**【Phase 3 新增：置信度评分 + 新任务识别】**
 
-**【自校正查询】先查经验库：**
-- 读取 `self-improving/experience-index.md`，了解高频任务和已知模式
+#### 2.1 经验查询
+
+- 读取 `self-improving/experience-index.md`
 - 读取相关 `self-improving/domains/[领域].md`
-- 如有匹配的历史经验 → 优先采用成功路径；如曾失败 → 跳过该方法或换降级策略
+- 匹配成功路径或识别失败规避
 
-**判断优先级（从高到低）：**
+#### 2.2 新任务识别
 
-1. **紧急异常处理**：如果 `recent_errors` 非空 → 状态=RECOVERING，执行错误修复
-2. **待发消息**：检查 `heartbeat-state.md` 的 `pending_actions[]` → 执行发送
-3. **日历提醒**：未来 2 小时内有日历事件 → 发出提醒
-4. **记忆维护**：如果上次心跳距今 > 8 小时 → 执行记忆整理（见下方）
-5. **常规检查**：如果距上次同类检查超过阈值 → 检查邮件/天气等
-6. **无事发生**：以上都没有 → 状态=IDLE，返回 `HEARTBEAT_OK`
+判断当前是否遇到**新任务类型**：
 
-**经验引导规则：**
-- 如果当前任务类型在 `experience-index.md` 的"失败模式记录"中有案底 → 先检查那次失败的原因是否已消除
-- 如果是未知任务类型 → 触发"探索模式"，小范围试错
+**识别标准（满足任一即为新）：**
+- 任务类型未在 `experience-index.md` 的任意表中出现
+- 任务类型有记录但成功率 < 50%（说明现有方法不适用）
+- 任务涉及**未建立领域文件**的新领域
+
+**新任务识别 → 置 `exploration_mode: true`**
+
+#### 2.3 置信度评分
+
+**对每个判断输出置信度：**
+
+| 场景 | 置信度基准 | 说明 |
+|------|-----------|------|
+| 经验库有成功路径 | ≥ 0.85 | 直接复用 |
+| 经验库有失败记录但原因已消除 | 0.6-0.8 | 谨慎执行，监控结果 |
+| 经验库无记录的新任务 | < 0.7 | **不自动执行**，进入探索模式 |
+| 领域知识文件存在 | +0.1 | 有知识支撑 |
+| 执行超时历史 | -0.2 | 稳定性存疑 |
+| 多源信息一致 | +0.15 | 信息充分 |
+
+**置信度 < 0.7 → 不自动执行，写入 `pending_review[]`，等用户确认**
+
+#### 2.4 决策优先级
+
+```
+1. exploration_tasks[] 非空 → 进入 EXPLORING，执行探索任务
+2. recent_errors 非空 → RECOVERING，错误修复
+3. pending_review[] 非空 → 置信度不足，等待用户确认
+4. pending_actions[] 非空 → 执行待发消息
+5. 经验置信度 ≥ 0.7 → PLANNING，正常执行
+6. 经验置信度 < 0.7 → EXPLORING，探索模式
+```
 
 ---
 
 ### STEP 3 — EXECUTE（执行）
 
-根据决策结果执行对应动作：
+#### 正常执行模式
 
-**动作库（按类型）：**
+按决策执行动作库（见原有 A/B/C/D/E）。
 
-#### A. 记忆整理（Memory Maintenance）
-- 扫描 `memory/` 目录，找出最近 48 小时内的日记
-- 提炼：决策、教训、待办
-- 更新 `MEMORY.md` 的 relevant sections
-- 写回 `heartbeat-state.md`：`last_memory_maintenance_at`
+#### **探索模式（EXPLORING）**
 
-#### B. 错误恢复（Error Recovery）
-- 读取 `recent_errors[]`
-- 对每条错误尝试自动修复（重试 / 降级 / 记录无法修复）
-- 执行完毕后清空 `recent_errors[]`
-- 写经验到 `self-improving/corrections.md`
+**触发条件：** 置信度 < 0.7 的新任务
 
-#### C. 日历检查（Calendar Check）
-- 查询未来 2 小时日历事件
-- 有事件 → 发提醒给用户，返回事件摘要
-- 无事件 → 继续
+**探索流程：**
 
-#### D. 邮件检查（Email Check）
-- 检查未读邮件（如果配置了邮件工具）
-- 高优先级邮件（发件人匹配 / 关键词匹配）→ 提醒用户
-- 写回 `heartbeat-state.md`：`last_email_check_at`
+```
+STEP 3.1 — 界定范围
+  将任务拆解为"最小可验证单元"
+  限制：只执行 1 个工具调用 / 只读 1 个文件 / 只搜索 1 个信息点
 
-#### E. 定时任务执行（Scheduled Task）
-- 读取 `heartbeat-state.md` 的 `scheduled_tasks[]`
-- 执行到达触发时间的任务
-- 更新任务状态
+STEP 3.2 — 执行试探
+  执行最小单元，记录：
+  - 用了什么工具/方法
+  - 执行结果如何
+  - 耗时/稳定性
+
+STEP 3.3 — 结果评估
+  成功 → 提炼为"试探成功方法"，可进入正常执行
+  失败 → 记录失败原因，提炼为"试探失败教训"，可换方法重试
+
+STEP 3.4 — 沉淀模式
+  试探成功的方法 → 写入 `self-improving/exploration-log.md`
+  并更新 `experience-index.md`：标注"试探阶段，待验证"
+  
+  试探失败的方法 → 写入 `exploration-log.md` 失败区，避免再用
+```
+
+**探索模式限制：**
+- 最多连续 3 次试探（3 次都失败 → 记录"探索失败"，交用户处理）
+- 每次试探完成后必须 LEARN，不允许跳过
 
 ---
 
 ### STEP 4 — EVALUATE（评估）
 
-执行完毕后，对本次心跳的**所有执行结果**进行评估：
+**正常模式：**
+- 逐动作核对成功/失败
+- 错误 → `recent_errors[]`
+- 意外收获 → PATTERNS
 
-**评估维度：**
-
-1. **执行是否成功**：每个动作逐一核对
-2. **是否产生新错误**：记录到 `recent_errors[]`
-3. **是否有意外收获**：执行结果超出预期 → 写入 `self-improving/memory.md` PATTERNS
-4. **用户是否有反馈**：检查是否有用户新消息（本次心跳期间）
-
-**评估结论写入 `heartbeat-state.md` 的 `last_outcome`：**
-```markdown
-last_outcome: |
-  timestamp: ISO8601
-  state_before: IDLE
-  actions_taken: [动作列表]
-  errors_encountered: [错误列表]
-  assessment: success | partial | failed
-  unexpected_results: [意外结果]
-```
+**探索模式：**
+- 每次试探后立即评估
+- 记录到 `exploration-log.md` 的对应条目
+- 成功 → 置信度提升（+0.2），可升级为正常执行
+- 失败 → 置信度不变，探索其他方法或交用户
 
 ---
 
 ### STEP 5 — LEARN（学习）
 
-基于评估结果，更新记忆、经验和策略：
+**正常模式：** 同前版
 
-**【自校正写入】每次执行必须记录：**
-- 将本次任务写入 `self-improving/execution-log.md`（按格式：任务类型、时间戳、结果、过程、教训）
-- 更新 `self-improving/experience-index.md`：
-  - 成功 → 在"高频任务优化路径"表追加一行（任务/成功率/推荐方法）
-  - 失败 → 在"失败模式记录"表追加一行（任务/失败原因/改进方向）
+**探索模式：**
+- 试探结果 → `self-improving/exploration-log.md`
+- 成功试探的模式 → 同步更新 `domains/[领域].md` 和 `experience-index.md`
+- 失败试探的原因 → 写入 `recent_errors[]` 和 `corrections.md`
 
-**经验更新规则：**
-- 如果某任务类型成功率 > 80%，下次优先用同一方法
-- 如果某任务类型成功率 < 50%，标记为"探索模式"候选
-- 同一失败原因出现 2 次以上 → 写入 `domains/[领域].md` 的"常见错误"，作为预防知识
-
-**分流更新：**
-- 成功执行 → 追加到 `execution-log.md`，更新 `experience-index.md`
-- 部分成功 → 同上，但额外写教训到 `corrections.md`
-- 失败 → 写错误详情到 `recent_errors[]`，教训写入 `corrections.md`，更新"失败模式记录"
-- 新模式/新教训 → 同步更新相关 `domains/[领域].md`
+**经验更新规则补充：**
+- 同一任务 3 次探索都成功 → 升级为"已知任务"，从 `exploration_tasks[]` 移除
+- 探索成功率 > 80% → 从探索模式升级为正常任务
+- 探索成功率 < 33% → 终止探索，标记为"困难任务"，交用户
 
 ---
 
-## 状态转移规则
+## 状态转移规则（Phase 3 扩充）
 
 ```
-任意状态 + 紧急异常 → ERROR_FATAL → RECOVERING → IDLE
 IDLE + 有待处理任务 → PLANNING
+IDLE + 新任务/置信度<0.7 → EXPLORING
 PLANNING + 计划制定完成 → EXECUTING
 EXECUTING + 所有动作完成 → EVALUATING
 EVALUATING + 评估完成 → LEARNED → IDLE
-RECOVERING + 修复尝试3次仍失败 → IDLE（记录待办，不再自动重试）
+EXPLORING + 试探成功 → EVALUATING → LEARNED → IDLE（若全部探索完成）
+EXPLORING + 3次试探失败 → IDLE（记录探索失败，pending_review）
+ERROR_FATAL → RECOVERING → IDLE
 ```
 
 ---
 
-## 稳定性保障（工程控制论第三章）
+## 稳定性保障（Phase 3 扩充）
 
-1. **心跳间隔保护**：两次心跳至少间隔 5 分钟（除非有紧急异常）
+1. **心跳间隔保护**：两次心跳至少间隔 5 分钟
 2. **最大执行时间**：单个动作超时 30 秒，强杀并记录错误
-3. **错误计数上限**：`recent_errors[]` 超过 5 条 → 停止自动执行，发通知
-4. **降级链**：如果方法A失败 → 自动换方法B → 方法C（最多3级）
+3. **错误计数上限**：`recent_errors[]` 超过 5 条 → 停止自动执行
+4. **降级链**：方法A失败 → 方法B → 方法C（最多3级）
+5. **探索限制**：同一任务最多 3 次试探探索，探索失败交用户
 
 ---
 
-## 不确定性处理（工程控制论第四章）
+## 置信度速查表
 
-1. **置信度 < 0.7 的判断**：不自动执行，先记录到 `pending_review[]`，等用户确认
-2. **多源信息冲突**：交叉验证，少数服从多数，无法判断 → 询问用户
-3. **未知任务类型**：触发"探索模式"——小范围试错，记录结果，扩展到完整执行
+执行前查这张表快速判断是否需要探索：
 
----
-
-## 执行记录规范
-
-每次心跳结束，必须更新 `heartbeat-state.md`：
-
-```markdown
-last_heartbeat_started_at: ISO8601
-last_heartbeat_ended_at: ISO8601
-last_outcome: (见上方格式)
-last_state: IDLE | PLANNING | ...
-last_actions_summary: 简短描述
-recent_errors: []  # 最多保留5条，自动清理超过24小时的旧错误
-pending_actions: []  # 待执行的延迟动作
-last_email_check_at: ISO8601 | null
-last_calendar_check_at: ISO8601 | null
-last_memory_maintenance_at: ISO8601 | null
-next_scheduled_tasks: []  # 未来定时任务
+```
+置信度 ≥ 0.85 → 直接执行（成功路径）
+置信度 0.70-0.84 → 谨慎执行，边做边评估
+置信度 < 0.70 → 探索模式，先小范围试探
 ```
 
 ---
 
-## 快速路径（优化）
+## 快速路径（Phase 3 补充）
 
-- 无异常 + 无待处理 + 常规检查未到期 → 直接 `HEARTBEAT_OK`，不执行完整5步
-- 但**每次心跳必须写** `last_heartbeat_started_at` 和 `last_heartbeat_ended_at`（用于判断是否需要执行记忆整理）
-- **每10次心跳强制执行一次完整5步**（防止快速路径导致长期不维护）
+- 无异常 + 无待处理 + 常规检查未到期 + `exploration_tasks[]` 为空 → `HEARTBEAT_OK`
+- **有探索任务时**：必须执行完所有 `exploration_tasks[]` 才能进入 IDLE
+- 每 10 次心跳强制完整 5 步（含探索模式检查）
