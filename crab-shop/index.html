@@ -765,20 +765,21 @@
 </div>
 
 <script>
-// 产品数据（去掉不相关图片，统一用真实蟹图）
+// 产品数据（同一蟹图不同裁剪位置，产生视觉差异）
+// crab-taizhou-main: 公蟹整体场景照；crab-real-1: 母蟹特写
 const products = [
-  { id: 'male-25', name: '精选2.5两公蟹', spec: '单只125g+，蟹膏饱满', price: '38', unit: '只', badge: '', img: 'crab-taizhou-main' },
-  { id: 'male-30', name: '精品3.0两公蟹', spec: '单只150g+，个大体健', price: '58', unit: '只', badge: '热卖', img: 'crab-taizhou-main' },
-  { id: 'male-35', name: '特选3.5两公蟹', spec: '单只175g+，蟹膏如凝脂', price: '78', unit: '只', badge: '', img: 'crab-taizhou-main' },
-  { id: 'female-20', name: '精选2.0两母蟹', spec: '单只100g+，蟹黄金红', price: '48', unit: '只', badge: '热卖', img: 'crab-real-1' },
-  { id: 'female-25', name: '精品2.5两母蟹', spec: '单只125g+，红心流油', price: '68', unit: '只', badge: '', img: 'crab-real-1' },
-  { id: 'female-30', name: '特选3.0两母蟹', spec: '单只150g+，蟹黄饱满', price: '98', unit: '只', badge: '爆款', img: 'crab-real-1' },
+  { id: 'male-25', name: '精选2.5两公蟹', spec: '单只125g+，蟹膏饱满', price: '38', unit: '只', badge: '', img: 'crab-taizhou-main', filter: 'sepia(0.1) saturate(1.1)', pos: 'center top' },
+  { id: 'male-30', name: '精品3.0两公蟹', spec: '单只150g+，个大体健', price: '58', unit: '只', badge: '热卖', img: 'crab-taizhou-main', filter: 'sepia(0) saturate(1.15)', pos: 'center 35%' },
+  { id: 'male-35', name: '特选3.5两公蟹', spec: '单只175g+，蟹膏如凝脂', price: '78', unit: '只', badge: '', img: 'crab-taizhou-main', filter: 'sepia(0.15) saturate(0.95)', pos: 'center 70%' },
+  { id: 'female-20', name: '精选2.0两母蟹', spec: '单只100g+，蟹黄金红', price: '48', unit: '只', badge: '热卖', img: 'crab-real-1', filter: 'sepia(0.05) saturate(1.2)', pos: 'center top' },
+  { id: 'female-25', name: '精品2.5两母蟹', spec: '单只125g+，红心流油', price: '68', unit: '只', badge: '', img: 'crab-real-1', filter: 'sepia(0.1) saturate(1.1)', pos: 'center 40%' },
+  { id: 'female-30', name: '特选3.0两母蟹', spec: '单只150g+，蟹黄饱满', price: '98', unit: '只', badge: '爆款', img: 'crab-real-1', filter: 'sepia(0.2) saturate(1.05)', pos: 'center 75%' },
 ];
 
 const giftProducts = [
-  { id: 'gift-1', name: '精品尝鲜礼盒', desc: '公蟹2.5两×3 + 母蟹2.0两×3，含冰袋保温箱', price: '368', badge: '', img: 'crab-taizhou-main' },
-  { id: 'gift-2', name: '阖家团圆礼盒', desc: '公蟹3.0两×4 + 母蟹2.5两×4，送精美贺卡', price: '688', badge: '热卖', img: 'crab-real-1' },
-  { id: 'gift-3', name: '尊享豪华礼盒', desc: '公蟹3.5两×4 + 母蟹3.0两×4，高档木质礼盒', price: '1288', badge: '推荐', img: 'crab-taizhou-main' },
+  { id: 'gift-1', name: '精品尝鲜礼盒', desc: '公蟹2.5两×3 + 母蟹2.0两×3，含冰袋保温箱', price: '368', badge: '', img: 'crab-taizhou-main', filter: 'sepia(0.05) brightness(1.05)', pos: 'center 25%' },
+  { id: 'gift-2', name: '阖家团圆礼盒', desc: '公蟹3.0两×4 + 母蟹2.5两×4，送精美贺卡', price: '688', badge: '热卖', img: 'crab-real-1', filter: 'sepia(0.08) saturate(1.15)', pos: 'center 50%' },
+  { id: 'gift-3', name: '尊享豪华礼盒', desc: '公蟹3.5两×4 + 母蟹3.0两×4，高档木质礼盒', price: '1288', badge: '推荐', img: 'crab-taizhou-main', filter: 'sepia(0.2) brightness(0.95)', pos: 'center 60%' },
 ];
 
 function renderProducts() {
@@ -786,7 +787,7 @@ function renderProducts() {
   grid.innerHTML = products.map(p => `
     <div class="product-card fade-up">
       <div class="product-img">
-        <img src="images/${p.img}.jpg" alt="${p.name}" onerror="this.style.display='none'">
+        <img src="images/${p.img}.jpg" alt="${p.name}" style="object-position:${p.pos || 'center'};filter:${p.filter || 'none'};" onerror="this.style.display='none'">
         ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       </div>
       <div class="product-info">
@@ -811,7 +812,7 @@ function renderGifts() {
   grid.innerHTML = giftProducts.map(g => `
     <div class="gift-card fade-up">
       <div class="gift-img">
-        <img src="images/${g.img}.jpg" alt="${g.name}" onerror="this.style.display='none'">
+        <img src="images/${g.img}.jpg" alt="${g.name}" style="object-position:${g.pos || 'center'};filter:${g.filter || 'none'};" onerror="this.style.display='none'">
         ${g.badge ? `<div class="gift-badge">${g.badge}</div>` : ''}
       </div>
       <div class="gift-info">
