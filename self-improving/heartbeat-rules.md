@@ -44,7 +44,12 @@ IDLE → PLANNING → EXECUTING → EVALUATING
 
 ### STEP 2 — THINK（决策）
 
-基于感知结果，判断本次心跳应该做什么：
+基于感知结果 + 历史经验，判断本次心跳应该做什么：
+
+**【自校正查询】先查经验库：**
+- 读取 `self-improving/experience-index.md`，了解高频任务和已知模式
+- 读取相关 `self-improving/domains/[领域].md`
+- 如有匹配的历史经验 → 优先采用成功路径；如曾失败 → 跳过该方法或换降级策略
 
 **判断优先级（从高到低）：**
 
@@ -54,6 +59,10 @@ IDLE → PLANNING → EXECUTING → EVALUATING
 4. **记忆维护**：如果上次心跳距今 > 8 小时 → 执行记忆整理（见下方）
 5. **常规检查**：如果距上次同类检查超过阈值 → 检查邮件/天气等
 6. **无事发生**：以上都没有 → 状态=IDLE，返回 `HEARTBEAT_OK`
+
+**经验引导规则：**
+- 如果当前任务类型在 `experience-index.md` 的"失败模式记录"中有案底 → 先检查那次失败的原因是否已消除
+- 如果是未知任务类型 → 触发"探索模式"，小范围试错
 
 ---
 
@@ -118,21 +127,24 @@ last_outcome: |
 
 ### STEP 5 — LEARN（学习）
 
-基于评估结果，更新记忆和策略：
+基于评估结果，更新记忆、经验和策略：
 
-**成功执行：**
-- 如果是新的任务类型 → 写入 `self-improving/domains/[领域].md` 的执行模式
-- 如果发现更优方法 → 更新 `self-improving/memory.md` PATTERNS
+**【自校正写入】每次执行必须记录：**
+- 将本次任务写入 `self-improving/execution-log.md`（按格式：任务类型、时间戳、结果、过程、教训）
+- 更新 `self-improving/experience-index.md`：
+  - 成功 → 在"高频任务优化路径"表追加一行（任务/成功率/推荐方法）
+  - 失败 → 在"失败模式记录"表追加一行（任务/失败原因/改进方向）
 
-**部分成功：**
-- 识别成功部分和失败部分
-- 失败部分 → 写入 `recent_errors[]`，供下次心跳处理
-- 教训 → 写入 `self-improving/corrections.md`
+**经验更新规则：**
+- 如果某任务类型成功率 > 80%，下次优先用同一方法
+- 如果某任务类型成功率 < 50%，标记为"探索模式"候选
+- 同一失败原因出现 2 次以上 → 写入 `domains/[领域].md` 的"常见错误"，作为预防知识
 
-**失败：**
-- 错误详情 → `recent_errors[]`
-- 降级策略是否有效 → 记录
-- 总结教训 → `self-improving/corrections.md`
+**分流更新：**
+- 成功执行 → 追加到 `execution-log.md`，更新 `experience-index.md`
+- 部分成功 → 同上，但额外写教训到 `corrections.md`
+- 失败 → 写错误详情到 `recent_errors[]`，教训写入 `corrections.md`，更新"失败模式记录"
+- 新模式/新教训 → 同步更新相关 `domains/[领域].md`
 
 ---
 

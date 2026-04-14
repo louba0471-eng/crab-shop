@@ -5,7 +5,8 @@
 | heartbeat-state.md | 心跳状态追踪（状态机、最近错误、待处理动作） | 2026-04-14 |
 | heartbeat-rules.md | 心跳完整规则（SENSE→THINK→EXECUTE→EVALUATE→LEARN闭环） | 2026-04-14 |
 | memory.md | 长期偏好、模式、规则（HOT tier） | — |
-| corrections.md | 执行错误教训记录 | — |
+| execution-log.md | 每次任务的完整执行记录（自校正素材） | — |
+| experience-index.md | 经验库索引（按领域/任务类型组织） | — |
 | domains/ | 各领域执行模式沉淀（按需创建） | — |
 | projects/ | 项目级记忆（按需创建） | — |
 | archive/ | 历史归档 | — |
