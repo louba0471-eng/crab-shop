@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>江苏徐磊精品大闸蟹 — 兴化蟹 · 产地直供</title>
+  <meta name="description" content="江苏兴化大闸蟹产地直供，精选优质水系科学养殖，顺丰冷链全国直达，死蟹包赔。电话：157-5128-1578">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1A252C;
+      --ink-light: #2E3F4A;
+      --warm-orange: #C4622D;
+      --orange-light: #E07B42;
+      --orange-dark: #A04E22;
+      --cream: #FAF7F2;
+      --cream-dark: #EDE5DA;
+      --text: #1A252C;
+      --text-light: #6B7D84;
+      --text-muted: #9AACBA;
+      --white: #FFFFFF;
+      --shadow: rgba(26,37,44,0.08);
+      --shadow-md: rgba(26,37,44,0.14);
+      --shadow-lg: rgba(26,37,44,0.22);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans SC', sans-serif; color: var(--text); background: var(--cream); line-height: 1.7; overflow-x: hidden; }
+    .serif { font-family: 'Noto Serif SC', serif; }
+    a { text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(196,98,45,0.1); transition: box-shadow 0.3s; }
+    nav.scrolled { box-shadow: 0 4px 24px var(--shadow); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: 3px; }
+    .nav-logo span { color: var(--warm-orange); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--text-light); letter-spacing: 1px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--warm-orange); }
+    .nav-tel { font-size: 14px; color: var(--warm-orange); font-weight: 600; letter-spacing: 1px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 22px; height: 2px; background: var(--ink); border-radius: 2px; }
+    .mobile-nav { display: none; position: fixed; top: 64px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--cream-dark); z-index: 99; padding: 20px 24px; box-shadow: 0 8px 24px var(--shadow); }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a { display: block; padding: 12px 0; font-size: 14px; color: var(--text); border-bottom: 1px solid var(--cream); letter-spacing: 1px; }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('images/crab-taizhou-main.jpg'); background-size: cover; background-position: center; filter: brightness(0.55) saturate(1.15); }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,37,44,0.3) 0%, rgba(26,37,44,0.1) 30%, rgba(26,37,44,0.5) 70%, rgba(26,37,44,0.88) 100%); }
+    .hero-content { position: relative; z-index: 2; max-width: 1200px; width: 100%; margin: 0 auto; padding: 100px 24px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .hero-text { color: white; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(196,98,45,0.25); border: 1px solid rgba(196,98,45,0.45); color: #FFB088; font-size: 12px; letter-spacing: 3px; padding: 8px 20px; border-radius: 50px; margin-bottom: 28px; }
+    .hero-title { font-family: 'Noto Serif SC', serif; font-size: clamp(40px, 5.5vw, 68px); font-weight: 700; line-height: 1.15; margin-bottom: 20px; letter-spacing: 6px; }
+    .hero-title .accent { color: #FFB088; }
+    .hero-sub { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 2; margin-bottom: 40px; max-width: 460px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--warm-orange); color: white; padding: 16px 36px; border-radius: 6px; font-size: 15px; font-weight: 600; letter-spacing: 2px; transition: all 0.3s; box-shadow: 0 6px 24px rgba(196,98,45,0.4); }
+    .btn-primary:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,98,45,0.5); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); color: white; padding: 16px 32px; border-radius: 6px; font-size: 15px; letter-spacing: 2px; border: 1.5px solid rgba(255,255,255,0.3); backdrop-filter: blur(8px); transition: all 0.3s; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
+    .hero-products { display: flex; flex-direction: column; gap: 16px; }
+    .hero-product-card { background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); transition: transform 0.25s; }
+    .hero-product-card:hover { transform: translateX(-6px); }
+    .hero-product-img { width: 64px; height: 64px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: var(--cream-dark); }
+    .hero-product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-product-info { flex: 1; }
+    .hero-product-name { font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 600; color: var(--ink); }
+    .hero-product-spec { font-size: 12px; color: var(--text-light); margin: 2px 0 6px; }
+    .hero-product-price { font-size: 18px; font-weight: 700; color: var(--warm-orange); }
+    .hero-product-price small { font-size: 12px; font-weight: 400; color: var(--text-light); }
+    .hero-float-tag { position: absolute; bottom: 40px; right: 40px; background: rgba(196,98,45,0.9); color: white; font-size: 12px; padding: 8px 18px; border-radius: 50px; letter-spacing: 1px; backdrop-filter: blur(8px); }
+
+    /* SECTIONS */
+    section { padding: 80px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-tag { font-size: 11px; letter-spacing: 5px; color: var(--warm-orange); text-transform: uppercase; margin-bottom: 12px; display: block; }
+    .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(26px, 3.5vw, 38px); font-weight: 600; color: var(--ink); margin-bottom: 14px; letter-spacing: 4px; }
+    .section-desc { font-size: 14px; color: var(--text-light); max-width: 520px; margin: 0 auto; line-height: 1.9; }
+    .divider { width: 48px; height: 2px; background: var(--warm-orange); margin: 18px auto 0; }
+
+    /* 产品展示 */
+    .products { background: var(--cream); }
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .product-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--shadow); transition: all 0.3s; }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px var(--shadow-md); }
+    .product-img { aspect-ratio: 1; overflow: hidden; background: var(--cream-dark); position: relative; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-badge { position: absolute; top: 14px; left: 14px; background: var(--warm-orange); color: white; font-size: 11px; padding: 5px 14px; border-radius: 50px; letter-spacing: 1px; }
+    .product-info { padding: 20px 22px; }
+    .product-name { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+    .product-spec { font-size: 12px; color: var(--text-light); margin-bottom: 16px; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { display: flex; align-items: baseline; gap: 3px; }
+    .product-price .yuan { font-size: 13px; color: var(--text-light); }
+    .product-price .num { font-size: 24px; font-weight: 700; color: var(--warm-orange); }
+    .product-price .unit { font-size: 12px; color: var(--text-light); margin-left: 2px; }
+    .product-btn { padding: 10px 22px; background: var(--ink); color: white; border-radius: 50px; font-size: 13px; letter-spacing: 1px; transition: background 0.2s; cursor: pointer; border: none; }
+    .product-btn:hover { background: var(--warm-orange); }
+
+    /* 规格价格 */
+    .specs { background: white; }
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .spec-card { border: 1.5px solid var(--cream-dark); border-radius: 24px; overflow: hidden; }
+    .spec-card:hover { box-shadow: 0 16px 48px var(--shadow-md); }
+    .spec-header { padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; }
+    .spec-header.male { background: linear-gradient(135deg, #2E3F4A, #1A252C); color: white; }
+    .spec-header.female { background: linear-gradient(135deg, #A04E22, #7A3820); color: white; }
+    .spec-header-emoji { font-size: 44px; }
+    .spec-header-title { font-family: 'Noto Serif SC', serif; font-size: 26px; font-weight: 700; letter-spacing: 5px; }
+    .spec-header-sub { font-size: 11px; opacity: 0.65; letter-spacing: 3px; margin-bottom: 6px; }
+    .spec-table { padding: 8px 32px 24px; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 14px 0; border-bottom: 1px solid var(--cream); font-size: 14px; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-row.head { font-size: 11px; color: var(--text-light); letter-spacing: 2px; padding-bottom: 10px; }
+    .spec-row .name { color: var(--ink); font-weight: 500; }
+    .spec-row .weight { color: var(--text-light); }
+    .spec-row .price { color: var(--warm-orange); font-weight: 700; text-align: right; }
+    .spec-footer { padding: 18px 32px; background: var(--cream); display: flex; justify-content: space-between; align-items: center; }
+    .spec-footer-note { font-size: 12px; color: var(--text-light); }
+
+    /* 礼盒 */
+    .gifts { background: var(--cream); }
+    .gift-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .gift-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px var(--shadow); transition: all 0.3s; }
+    .gift-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px var(--shadow-md); }
+    .gift-img { aspect-ratio: 16/9; overflow: hidden; background: var(--cream-dark); position: relative; }
+    .gift-img img { width: 100%; height: 100%; object-fit: cover; }
+    .gift-badge { position: absolute; top: 14px; left: 14px; background: var(--warm-orange); color: white; font-size: 11px; padding: 5px 14px; border-radius: 50px; letter-spacing: 1px; }
+    .gift-info { padding: 22px; }
+    .gift-name { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+    .gift-desc { font-size: 12px; color: var(--text-light); line-height: 1.8; margin-bottom: 16px; }
+    .gift-bottom { display: flex; justify-content: space-between; align-items: center; }
+
+    /* 保障 */
+    .guarantees { background: var(--ink); color: white; }
+    .guarantees .section-title { color: white; }
+    .guarantees .section-tag { color: #FFB088; }
+    .guarantees .section-desc { color: rgba(255,255,255,0.5); }
+    .guarante-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .guarante-item { text-align: center; padding: 36px 20px; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; transition: all 0.3s; }
+    .guarante-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(196,98,45,0.4); transform: translateY(-4px); }
+    .guarante-icon { font-size: 44px; margin-bottom: 16px; }
+    .guarante-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; letter-spacing: 2px; }
+    .guarante-desc { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.8; }
+
+    /* 评价 */
+    .reviews { background: white; }
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .review-card { background: var(--cream); border-radius: 20px; padding: 28px; transition: all 0.3s; }
+    .review-card:hover { box-shadow: 0 8px 32px var(--shadow); }
+    .review-stars { color: var(--warm-orange); font-size: 14px; letter-spacing: 3px; margin-bottom: 14px; }
+    .review-text { font-size: 14px; color: var(--text); line-height: 1.9; margin-bottom: 20px; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--warm-orange); display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; font-weight: 600; }
+    .review-name { font-size: 14px; font-weight: 600; }
+    .review-date { font-size: 12px; color: var(--text-light); }
+
+    /* ============================================================
+       订购区块（全新重做）
+       ============================================================ */
+    .order-section { background: var(--cream); }
+    .order-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .order-info-card { background: white; border-radius: 24px; padding: 36px; box-shadow: 0 8px 32px var(--shadow); }
+    .order-info-card h3 { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 600; margin-bottom: 20px; color: var(--ink); letter-spacing: 3px; }
+    .order-method { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+    .order-method-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 16px; background: var(--cream); transition: all 0.2s; }
+    .order-method-item:hover { background: var(--cream-dark); }
+    .order-method-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .order-method-icon.wx { background: #07C160; color: white; }
+    .order-method-icon.tel { background: var(--warm-orange); color: white; }
+    .order-method-icon.addr { background: var(--ink); color: white; }
+    .order-method-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--ink); }
+    .order-method-text p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+    .order-wx-qr { margin-top: 20px; text-align: center; padding: 20px; background: var(--cream); border-radius: 16px; }
+    .order-wx-qr img { width: 160px; height: 160px; margin: 0 auto 12px; border-radius: 12px; display: block; }
+    .order-wx-qr p { font-size: 13px; color: var(--text-light); }
+    .order-wx-qr .wx-num { font-size: 14px; color: var(--ink); font-weight: 600; margin-top: 8px; letter-spacing: 2px; }
+    .order-note { margin-top: 20px; padding: 16px; background: #FFF8E7; border-radius: 12px; border-left: 3px solid #D4A017; }
+    .order-note p { font-size: 13px; color: #7A5C00; line-height: 1.7; }
+
+    /* 订购表单 */
+    .order-form-card { background: white; border-radius: 24px; padding: 36px; box-shadow: 0 8px 32px var(--shadow); }
+    .order-form-card h3 { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 600; margin-bottom: 24px; color: var(--ink); letter-spacing: 3px; }
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; color: var(--text-light); margin-bottom: 8px; letter-spacing: 1px; }
+    .form-input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 14px; font-family: 'Noto Sans SC', sans-serif; color: var(--text); transition: border-color 0.2s; background: white; }
+    .form-input:focus { outline: none; border-color: var(--warm-orange); }
+    .form-select { width: 100%; padding: 12px 16px; border: 1.5px solid var(--cream-dark); border-radius: 12px; font-size: 14px; font-family: 'Noto Sans SC', sans-serif; color: var(--text); background: white; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7D84' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+    .form-select:focus { outline: none; border-color: var(--warm-orange); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit { width: 100%; padding: 16px; background: var(--warm-orange); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; letter-spacing: 3px; cursor: pointer; transition: all 0.3s; font-family: 'Noto Sans SC', sans-serif; }
+    .form-submit:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.35); }
+    .form-submit:active { transform: translateY(0); }
+
+    /* 订单确认弹窗 */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .modal-overlay.show { display: flex; }
+    .modal { background: white; border-radius: 24px; padding: 40px; max-width: 480px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,0,0.3); }
+    .modal h3 { font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 600; margin-bottom: 20px; color: var(--ink); letter-spacing: 3px; text-align: center; }
+    .modal-close { display: block; margin: 20px auto 0; padding: 12px 32px; background: var(--ink); color: white; border: none; border-radius: 50px; font-size: 14px; cursor: pointer; font-family: 'Noto Sans SC', sans-serif; letter-spacing: 2px; }
+    .order-summary { background: var(--cream); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .order-summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--cream-dark); }
+    .order-summary-row:last-child { border-bottom: none; }
+    .order-summary-row.total { font-weight: 700; font-size: 16px; color: var(--warm-orange); padding-top: 12px; }
+    .order-summary-row .label { color: var(--text-light); }
+    .order-summary-row .value { color: var(--ink); font-weight: 500; }
+    .order-confirm-text { text-align: center; font-size: 14px; color: var(--text-light); margin-bottom: 16px; line-height: 1.8; }
+    .order-confirm-phone { text-align: center; font-size: 22px; font-weight: 700; color: var(--warm-orange); letter-spacing: 3px; font-family: 'Noto Serif SC', serif; margin-bottom: 16px; }
+    .order-confirm-note { text-align: center; font-size: 13px; color: var(--text-light); background: #FFF8E7; padding: 12px; border-radius: 10px; line-height: 1.7; }
+
+    /* CTA */
+    .cta { background: linear-gradient(135deg, #1A252C 0%, #2E3F4A 50%, #1A252C 100%); text-align: center; padding: 80px 24px; position: relative; overflow: hidden; }
+    .cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(196,98,45,0.25) 0%, transparent 70%); }
+    .cta-inner { position: relative; z-index: 2; }
+    .cta-title { font-family: 'Noto Serif SC', serif; font-size: clamp(26px, 4vw, 44px); color: white; font-weight: 600; letter-spacing: 5px; margin-bottom: 16px; }
+    .cta-sub { color: rgba(255,255,255,0.55); font-size: 14px; margin-bottom: 36px; }
+    .cta-phone { font-size: clamp(32px, 6vw, 56px); color: #FFB088; font-weight: 700; letter-spacing: 5px; margin-bottom: 32px; font-family: 'Noto Serif SC', serif; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-wx { display: inline-flex; align-items: center; gap: 8px; background: #07C160; color: white; padding: 16px 36px; border-radius: 6px; font-size: 15px; font-weight: 600; letter-spacing: 2px; transition: all 0.3s; box-shadow: 0 6px 24px rgba(7,193,96,0.35); }
+    .btn-wx:hover { background: #06AD56; transform: translateY(-2px); }
+    .cta-meta { margin-top: 36px; display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .cta-meta > div { color: rgba(255,255,255,0.35); font-size: 13px; }
+
+    /* 产地溯源 */
+    .origin { background: white; }
+    .origin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .origin-visual { border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px var(--shadow-md); aspect-ratio: 4/3; position: relative; }
+    .origin-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .origin-visual .origin-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(26,37,44,0.8), transparent); padding: 32px 24px 20px; color: white; }
+    .origin-overlay .origin-title { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 600; letter-spacing: 3px; margin-bottom: 4px; }
+    .origin-overlay .origin-sub { font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 1px; }
+    .origin-text h3 { font-family: 'Noto Serif SC', serif; font-size: 26px; font-weight: 600; margin-bottom: 12px; letter-spacing: 3px; color: var(--ink); }
+    .origin-text p { font-size: 14px; color: var(--text-light); line-height: 2; margin-bottom: 28px; }
+    .origin-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .origin-feature { display: flex; gap: 14px; align-items: flex-start; }
+    .origin-feature-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .origin-feature h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: var(--ink); }
+    .origin-feature p { font-size: 12px; color: var(--text-light); line-height: 1.7; }
+
+    /* FOOTER */
+    footer { background: #0f171d; color: rgba(255,255,255,0.3); padding: 40px 24px; text-align: center; }
+    .footer-logo { font-family: 'Noto Serif SC', serif; font-size: 18px; color: rgba(255,255,255,0.55); margin-bottom: 14px; letter-spacing: 4px; }
+    .footer-info { font-size: 12px; line-height: 2.2; margin-bottom: 16px; }
+    .footer-copy { font-size: 11px; }
+
+    /* STICKY BAR */
+    .sticky-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); border-top: 1px solid var(--cream-dark); padding: 14px 24px; z-index: 98; align-items: center; justify-content: space-between; }
+    .sticky-price { font-size: 20px; font-weight: 700; color: var(--warm-orange); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-products { display: none; }
+      .hero-title { font-size: 40px; }
+      .origin-grid { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: 1fr 1fr; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .gift-grid { grid-template-columns: 1fr 1fr; }
+      .guarante-grid { grid-template-columns: 1fr 1fr; }
+      .review-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .sticky-bar { display: flex; }
+      .nav-tel { display: none; }
+      .order-wrapper { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .gift-grid { grid-template-columns: 1fr; }
+      .guarante-grid { grid-template-columns: 1fr; }
+      .origin-features { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">徐磊<span>·</span>精品大闸蟹</div>
+    <ul class="nav-links">
+      <li><a href="#origin">产地</a></li>
+      <li><a href="#products">产品</a></li>
+      <li><a href="#specs">规格</a></li>
+      <li><a href="#gifts">礼盒</a></li>
+      <li><a href="#order">订购</a></li>
+    </ul>
+    <span class="nav-tel">📞 157-5128-1578</span>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#origin" onclick="toggleMenu()">产地优势</a>
+  <a href="#products" onclick="toggleMenu()">产品展示</a>
+  <a href="#specs" onclick="toggleMenu()">规格价格</a>
+  <a href="#gifts" onclick="toggleMenu()">礼盒套餐</a>
+  <a href="#order" onclick="toggleMenu()">立即订购</a>
+  <a href="#reviews" onclick="toggleMenu()">客户评价</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">🏞️ 产地直供 · 兴化蟹都</div>
+      <h1 class="hero-title">江苏徐磊<br>精品<span class="accent">大闸蟹</span></h1>
+      <p class="hero-sub">
+        源自中国河蟹之乡——江苏省兴化市安丰镇国蟹市场。<br>
+        精选优质水系，科学养殖，只做正宗兴化大闸蟹。
+      </p>
+      <div class="hero-actions">
+        <a href="#order" class="btn-primary">立即订购 →</a>
+        <a href="#products" class="btn-secondary">查看产品</a>
+      </div>
+    </div>
+    <div class="hero-products">
+      <div class="hero-product-card">
+        <div class="hero-product-img"><img src="images/crab-taizhou-main.jpg" alt="兴化公蟹" onerror="this.style.display='none'"></div>
+        <div class="hero-product-info">
+          <div class="hero-product-name">精品3.0两公蟹</div>
+          <div class="hero-product-spec">单只150g+，蟹膏饱满</div>
+          <div class="hero-product-price">¥58 <small>/只</small></div>
+        </div>
+      </div>
+      <div class="hero-product-card">
+        <div class="hero-product-img"><img src="images/crab-taizhou-main.jpg" alt="兴化母蟹" onerror="this.style.display='none'"></div>
+        <div class="hero-product-info">
+          <div class="hero-product-name">精品2.5两母蟹</div>
+          <div class="hero-product-spec">单只125g+，红心流油</div>
+          <div class="hero-product-price">¥68 <small>/只</small></div>
+        </div>
+      </div>
+      <div class="hero-product-card">
+        <div class="hero-product-img"><img src="images/crab-real-1.jpg" alt="精品礼盒" onerror="this.style.display='none'"></div>
+        <div class="hero-product-info">
+          <div class="hero-product-name">阖家团圆礼盒</div>
+          <div class="hero-product-spec">公3.0两×4 + 母2.5两×4</div>
+          <div class="hero-product-price">¥688 <small>/盒</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-float-tag">🦀 兴化大闸蟹 · 产地直供</div>
+</section>
+
+<!-- 产地溯源 -->
+<section class="origin" id="origin">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">ORIGIN</span>
+      <h2 class="section-title">好水出好蟹 · 产地决定品质</h2>
+      <p class="section-desc">兴化大闸蟹自古为贡品，产自江苏兴化水乡，得天独厚的水质与气候，造就了蟹肉的鲜甜与饱满。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="origin-grid">
+      <div class="origin-visual fade-up">
+        <img src="images/crab-real-1.jpg" alt="兴化大闸蟹养殖基地">
+        <div class="origin-overlay">
+          <div class="origin-title">兴化市安丰镇</div>
+          <div class="origin-sub">江苏省兴化市 · 国蟹市场</div>
+        </div>
+      </div>
+      <div class="origin-text fade-up delay-1">
+        <h3>兴化 — 中国河蟹之乡</h3>
+        <p>兴化市位于江苏省中部、长江三角洲北翼，里下河地区腹部。水网密布，水草丰茂，是大闸蟹生长的天然乐园。所产大闸蟹青背白肚、金爪黄毛、肉质鲜嫩、膏黄饱满。</p>
+        <div class="origin-features">
+          <div class="origin-feature">
+            <div class="origin-feature-icon">🌊</div>
+            <div><h4>优质水系</h4><p>里下河腹地，水质清澈，天然饵料丰富</p></div>
+          </div>
+          <div class="origin-feature">
+            <div class="origin-feature-icon">🌿</div>
+            <div><h4>科学养殖</h4><p>标准化池塘，生态养殖，拒绝抗生素</p></div>
+          </div>
+          <div class="origin-feature">
+            <div class="origin-feature-icon">📍</div>
+            <div><h4>产地直发</h4><p>现捕现发，冷链直达，确保鲜活</p></div>
+          </div>
+          <div class="origin-feature">
+            <div class="origin-feature-icon">✅</div>
+            <div><h4>品质精选</h4><p>只选优质成蟹，个大饱满，品质如一</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 产品展示 -->
+<section class="products" id="products">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">PRODUCTS</span>
+      <h2 class="section-title">鲜活大闸蟹 · 产品展示</h2>
+      <p class="section-desc">每一只蟹都经过精心筛选，个大体健，蟹黄金足，保证鲜活送达。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- 规格价格 -->
+<section class="specs" id="specs">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">SPECS</span>
+      <h2 class="section-title">公蟹母蟹 · 规格与价格</h2>
+      <p class="section-desc">明码标价，真实重量，绝不短斤少两，支持现场验货。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="specs-grid fade-up">
+      <div class="spec-card">
+        <div class="spec-header male">
+          <div>
+            <div class="spec-header-sub">MALE CRAB</div>
+            <div class="spec-header-title">公蟹</div>
+          </div>
+          <div class="spec-header-emoji">♂</div>
+        </div>
+        <div class="spec-table">
+          <div class="spec-row head"><span>规格</span><span>单只重量</span><span style="text-align:right">价格</span></div>
+          <div class="spec-row"><span class="name">2.0两公蟹</span><span class="weight">100g+</span><span class="price">¥28/只</span></div>
+          <div class="spec-row"><span class="name">2.5两公蟹</span><span class="weight">125g+</span><span class="price">¥38/只</span></div>
+          <div class="spec-row"><span class="name">3.0两公蟹</span><span class="weight">150g+</span><span class="price">¥58/只</span></div>
+          <div class="spec-row"><span class="name">3.5两公蟹</span><span class="weight">175g+</span><span class="price">¥78/只</span></div>
+          <div class="spec-row"><span class="name">4.0两公蟹</span><span class="weight">200g+</span><span class="price">¥108/只</span></div>
+        </div>
+        <div class="spec-footer">
+          <span class="spec-footer-note">⭐ 蟹膏饱满，白玉晶莹</span>
+          <a href="#order" class="btn-primary" style="padding:10px 20px;font-size:12px;">立即订购</a>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header female">
+          <div>
+            <div class="spec-header-sub">FEMALE CRAB</div>
+            <div class="spec-header-title">母蟹</div>
+          </div>
+          <div class="spec-header-emoji">♀</div>
+        </div>
+        <div class="spec-table">
+          <div class="spec-row head"><span>规格</span><span>单只重量</span><span style="text-align:right">价格</span></div>
+          <div class="spec-row"><span class="name">1.5两母蟹</span><span class="weight">75g+</span><span class="price">¥28/只</span></div>
+          <div class="spec-row"><span class="name">2.0两母蟹</span><span class="weight">100g+</span><span class="price">¥48/只</span></div>
+          <div class="spec-row"><span class="name">2.5两母蟹</span><span class="weight">125g+</span><span class="price">¥68/只</span></div>
+          <div class="spec-row"><span class="name">3.0两母蟹</span><span class="weight">150g+</span><span class="price">¥98/只</span></div>
+          <div class="spec-row"><span class="name">3.5两母蟹</span><span class="weight">175g+</span><span class="price">¥138/只</span></div>
+        </div>
+        <div class="spec-footer">
+          <span class="spec-footer-note">⭐ 蟹黄饱满，红心流油</span>
+          <a href="#order" class="btn-primary" style="padding:10px 20px;font-size:12px;">立即订购</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 礼盒 -->
+<section class="gifts" id="gifts">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">GIFT BOXES</span>
+      <h2 class="section-title">精品礼盒 · 馈赠佳品</h2>
+      <p class="section-desc">精美礼盒包装，国风设计，送礼体面过人，佳节必备。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="gift-grid" id="giftGrid"></div>
+  </div>
+</section>
+
+<!-- 保障 -->
+<section class="guarantees" id="guarantees">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">GUARANTEE</span>
+      <h2 class="section-title">五大承诺 · 买得放心</h2>
+      <p class="section-desc">从捕捞到送达，每一个环节都有保障。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="guarante-grid fade-up">
+      <div class="guarante-item">
+        <div class="guarante-icon">🏭</div>
+        <div class="guarante-title">产地直供</div>
+        <div class="guarante-desc">江苏省兴化市安丰镇国蟹市场直发，无中间商</div>
+      </div>
+      <div class="guarante-item">
+        <div class="guarante-icon">❄️</div>
+        <div class="guarante-title">顺丰冷链</div>
+        <div class="guarante-desc">专业冷链配送，保温箱+冰袋全程低温保鲜</div>
+      </div>
+      <div class="guarante-item">
+        <div class="guarante-icon">🦀</div>
+        <div class="guarante-title">死蟹包赔</div>
+        <div class="guarante-desc">收货时如发现死蟹，拍照凭证，即时赔付</div>
+      </div>
+      <div class="guarante-item">
+        <div class="guarante-icon">🛡️</div>
+        <div class="guarante-title">售后无忧</div>
+        <div class="guarante-desc">专业客服全程跟进，疑问即时响应</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 评价 -->
+<section class="reviews" id="reviews">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">REVIEWS</span>
+      <h2 class="section-title">客户真实评价</h2>
+      <p class="section-desc">真实买家评价，品质说话。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="review-grid fade-up">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"第一次买徐磊家的蟹，蟹黄超级饱满，个头也大。顺丰冷链到手还是活的，确实是正宗兴化蟹。下次还来！"</div>
+        <div class="review-author">
+          <div class="review-avatar">张</div>
+          <div><div class="review-name">张先生</div><div class="review-date">2024.10.15 · 购买3.0两母蟹</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"买来送客户的，礼盒包装非常精美，客户反馈很好。蟹很新鲜，公蟹蟹膏满满的，品质没话说。"</div>
+        <div class="review-author">
+          <div class="review-avatar">李</div>
+          <div><div class="review-name">李女士</div><div class="review-date">2024.10.18 · 购买精品礼盒</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"朋友推荐的，果然名不虚传！蟹肉鲜甜，蟹黄红亮，口感和超市买的完全不一样。已经是第三次回购了。"</div>
+        <div class="review-author">
+          <div class="review-avatar">王</div>
+          <div><div class="review-name">王先生</div><div class="review-date">2024.10.22 · 购买公母蟹套餐</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 订购（全新） -->
+<section class="order-section" id="order">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-tag">ORDER</span>
+      <h2 class="section-title">一键订购 · 三种方式</h2>
+      <p class="section-desc">选择最适合您的方式，简单几步，鲜活大闸蟹送到家。</p>
+      <div class="divider"></div>
+    </div>
+    <div class="order-wrapper fade-up">
+      <!-- 左侧：订购方式 -->
+      <div class="order-info-card">
+        <h3>📞/💚 订购方式</h3>
+        <div class="order-method">
+          <div class="order-method-item">
+            <div class="order-method-icon tel">📞</div>
+            <div class="order-method-text">
+              <h4>电话订购</h4>
+              <p>直接拨打手机，即时沟通，即时下单</p>
+            </div>
+          </div>
+          <div class="order-method-item">
+            <div class="order-method-icon wx">💚</div>
+            <div class="order-method-text">
+              <h4>微信订购</h4>
+              <p>搜索微信号或扫描微信二维码，加好友后发送您想要的产品</p>
+            </div>
+          </div>
+          <div class="order-method-item">
+            <div class="order-method-icon addr">📍</div>
+            <div class="order-method-text">
+              <h4>现场提货</h4>
+              <p>欢迎到江苏省兴化市安丰镇国蟹市场现场挑选，品质看得见</p>
+            </div>
+          </div>
+        </div>
+        <!-- 微信二维码占位 -->
+        <div class="order-wx-qr">
+          <div style="width:160px;height:160px;margin:0 auto 12px;border-radius:12px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-light);border:2px dashed var(--cream-dark);">
+            <div style="text-align:center;">
+              <div style="font-size:32px;margin-bottom:8px;">💚</div>
+              <div>微信二维码</div>
+              <div style="font-size:11px;margin-top:4px;">（联系获取）</div>
+            </div>
+          </div>
+          <p>微信联系更方便，可发定位、可看实拍</p>
+          <div class="wx-num">微信号：xulei_crab2024</div>
+        </div>
+        <div class="order-note">
+          <p>⚠️ <strong>温馨提示：</strong>请提前1-2天预订，以便我们为您预留最新鲜的蟹。发货后我们会第一时间发送快递单号，方便您追踪物流。</p>
+        </div>
+      </div>
+      <!-- 右侧：在线下单表单 -->
+      <div class="order-form-card">
+        <h3>📝 在线提交订单</h3>
+        <form id="orderForm" onsubmit="submitOrder(event)">
+          <div class="form-group">
+            <label class="form-label">您的姓名 *</label>
+            <input type="text" class="form-input" name="name" placeholder="请输入您的姓名" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">联系电话 *</label>
+              <input type="tel" class="form-input" name="phone" placeholder="手机号码" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">所在城市 *</label>
+              <input type="text" class="form-input" name="city" placeholder="例：上海 / 北京" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">收货地址（顺丰冷链可达城市）</label>
+            <input type="text" class="form-input" name="address" placeholder="详细地址，顺丰冷链全国可达">
+          </div>
+          <div class="form-group">
+            <label class="form-label">选择产品 *</label>
+            <select class="form-select" name="product" required onchange="updateOrderSummary()">
+              <option value="">请选择产品规格</option>
+              <option value="公蟹2.0两-28元/只">公蟹 2.0两 — ¥28/只</option>
+              <option value="公蟹2.5两-38元/只">公蟹 2.5两 — ¥38/只</option>
+              <option value="公蟹3.0两-58元/只">公蟹 3.0两 — ¥58/只（热卖）</option>
+              <option value="公蟹3.5两-78元/只">公蟹 3.5两 — ¥78/只</option>
+              <option value="公蟹4.0两-108元/只">公蟹 4.0两 — ¥108/只</option>
+              <option value="母蟹1.5两-28元/只">母蟹 1.5两 — ¥28/只</option>
+              <option value="母蟹2.0两-48元/只">母蟹 2.0两 — ¥48/只</option>
+              <option value="母蟹2.5两-68元/只">母蟹 2.5两 — ¥68/只（热卖）</option>
+              <option value="母蟹3.0两-98元/只">母蟹 3.0两 — ¥98/只</option>
+              <option value="母蟹3.5两-138元/只">母蟹 3.5两 — ¥138/只</option>
+              <option value="精品尝鲜礼盒-368元/盒">精品尝鲜礼盒 — ¥368/盒</option>
+              <option value="阖家团圆礼盒-688元/盒">阖家团圆礼盒 — ¥688/盒（热卖）</option>
+              <option value="尊享豪华礼盒-1288元/盒">尊享豪华礼盒 — ¥1288/盒</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">数量 *</label>
+              <select class="form-select" name="quantity" onchange="updateOrderSummary()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="10">10（箱）</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">期望发货日</label>
+              <select class="form-select" name="shipdate">
+                <option value="">越快越好</option>
+                <option value="明天">明天</option>
+                <option value="后天">后天</option>
+                <option value="指定日期">指定日期（请备注）</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">备注（特殊要求、礼盒贺卡等）</label>
+            <input type="text" class="form-input" name="note" placeholder="例：需要礼盒包装，送人">
+          </div>
+          <!-- 订单摘要预览 -->
+          <div class="order-summary" id="orderSummary" style="display:none;">
+            <div class="order-summary-row total">
+              <span class="label">订单金额</span>
+              <span class="value" id="summaryTotal">¥0</span>
+            </div>
+            <div class="order-summary-row">
+              <span class="label">产品</span>
+              <span class="value" id="summaryProduct">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span class="label">数量</span>
+              <span class="value" id="summaryQty">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span class="label">收货人</span>
+              <span class="value" id="summaryName">—</span>
+            </div>
+            <div class="order-summary-row">
+              <span class="label">联系电话</span>
+              <span class="value" id="summaryPhone">—</span>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">提交订单 →</button>
+        </form>
+        <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:14px;">提交后商家会第一时间电话联系您确认订单</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 订单确认弹窗 -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <h3>✅ 订单已提交</h3>
+    <div class="order-confirm-text">
+      感谢您的订单！我们的工作人员将会在<br><strong>30分钟内</strong>电话联系您确认订单详情。
+    </div>
+    <div class="order-confirm-phone">157-5128-1578</div>
+    <div class="order-summary" id="modalSummary"></div>
+    <div class="order-confirm-note">
+      💡 也欢迎您直接拨打上面的电话联系我们，告知您的订单编号，即可快速确认。
+    </div>
+    <button class="modal-close" onclick="closeModal()">我知道了</button>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-inner">
+    <div class="hero-badge" style="margin:0 auto 28px;width:fit-content;background:rgba(196,98,45,0.18);border-color:rgba(196,98,45,0.3);">
+      📞 立即拨打 · 产地直购
+    </div>
+    <h2 class="cta-title">正宗兴化大闸蟹<br>从池塘直达餐桌</h2>
+    <p class="cta-sub">支持电话订购、微信订购，顺丰冷链全国直达</p>
+    <div class="cta-phone">157-5128-1578</div>
+    <div class="cta-btns">
+      <a href="tel:15751281578" class="btn-primary">📞 电话订购</a>
+      <a href="#order" class="btn-wx">💚 微信订购</a>
+    </div>
+    <div class="cta-meta">
+      <div>📍 江苏省兴化市安丰镇国蟹市场</div>
+      <div>🕐 营业时间：全天</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">徐磊精品大闸蟹</div>
+  <div class="footer-info">
+    <div>📍 江苏省兴化市安丰镇国蟹市场</div>
+    <div>📞 157-5128-1578（徐磊）</div>
+    <div>🦀 主营：江苏兴化大闸蟹 · 产地直供 · 品质保证</div>
+  </div>
+  <div class="footer-copy">© 2024 江苏徐磊精品大闸蟹 | 兴化蟹都 · 品质如一</div>
+</footer>
+
+<!-- 底部固定栏 -->
+<div class="sticky-bar" id="stickyBar">
+  <div>
+    <div style="font-size:12px;color:var(--text-light);">精品大闸蟹</div>
+    <div class="sticky-price">¥28起</div>
+  </div>
+  <a href="#order" class="btn-primary" style="padding:10px 24px;font-size:13px;">立即订购</a>
+</div>
+
+<script>
+// 产品数据（去掉不相关图片，统一用真实蟹图）
+const products = [
+  { id: 'male-25', name: '精选2.5两公蟹', spec: '单只125g+，蟹膏饱满', price: '38', unit: '只', badge: '', img: 'crab-taizhou-main' },
+  { id: 'male-30', name: '精品3.0两公蟹', spec: '单只150g+，个大体健', price: '58', unit: '只', badge: '热卖', img: 'crab-taizhou-main' },
+  { id: 'male-35', name: '特选3.5两公蟹', spec: '单只175g+，蟹膏如凝脂', price: '78', unit: '只', badge: '', img: 'crab-taizhou-main' },
+  { id: 'female-20', name: '精选2.0两母蟹', spec: '单只100g+，蟹黄金红', price: '48', unit: '只', badge: '热卖', img: 'crab-real-1' },
+  { id: 'female-25', name: '精品2.5两母蟹', spec: '单只125g+，红心流油', price: '68', unit: '只', badge: '', img: 'crab-real-1' },
+  { id: 'female-30', name: '特选3.0两母蟹', spec: '单只150g+，蟹黄饱满', price: '98', unit: '只', badge: '爆款', img: 'crab-real-1' },
+];
+
+const giftProducts = [
+  { id: 'gift-1', name: '精品尝鲜礼盒', desc: '公蟹2.5两×3 + 母蟹2.0两×3，含冰袋保温箱', price: '368', badge: '', img: 'crab-taizhou-main' },
+  { id: 'gift-2', name: '阖家团圆礼盒', desc: '公蟹3.0两×4 + 母蟹2.5两×4，送精美贺卡', price: '688', badge: '热卖', img: 'crab-real-1' },
+  { id: 'gift-3', name: '尊享豪华礼盒', desc: '公蟹3.5两×4 + 母蟹3.0两×4，高档木质礼盒', price: '1288', badge: '推荐', img: 'crab-taizhou-main' },
+];
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card fade-up">
+      <div class="product-img">
+        <img src="images/${p.img}.jpg" alt="${p.name}" onerror="this.style.display='none'">
+        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-spec">${p.spec}</div>
+        <div class="product-bottom">
+          <div class="product-price"><span class="yuan">¥</span><span class="num">${p.price}</span><span class="unit">/${p.unit}</span></div>
+          <button class="product-btn" onclick="scrollToOrder('${p.id}')">订购</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.product-card').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 80);
+    });
+  }, 50);
+}
+
+function renderGifts() {
+  const grid = document.getElementById('giftGrid');
+  grid.innerHTML = giftProducts.map(g => `
+    <div class="gift-card fade-up">
+      <div class="gift-img">
+        <img src="images/${g.img}.jpg" alt="${g.name}" onerror="this.style.display='none'">
+        ${g.badge ? `<div class="gift-badge">${g.badge}</div>` : ''}
+      </div>
+      <div class="gift-info">
+        <div class="gift-name">${g.name}</div>
+        <div class="gift-desc">${g.desc}</div>
+        <div class="gift-bottom">
+          <div class="product-price"><span class="yuan">¥</span><span class="num">${g.price}</span><span class="unit">/盒</span></div>
+          <button class="product-btn" onclick="scrollToOrder('${g.id}')">订购</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.gift-card').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 100);
+    });
+  }, 50);
+}
+
+function scrollToOrder(productId) {
+  document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateOrderSummary() {
+  const form = document.getElementById('orderForm');
+  const product = form.product.value;
+  const qty = parseInt(form.quantity.value);
+  const name = form.name.value;
+  const phone = form.phone.value;
+  const summary = document.getElementById('orderSummary');
+  if (!product) { summary.style.display = 'none'; return; }
+
+  // 从product字符串提取价格
+  let price = 0;
+  const priceMatch = product.match(/¥(\d+)/);
+  if (priceMatch) price = parseInt(priceMatch[1]);
+  const total = price * qty;
+
+  document.getElementById('summaryProduct').textContent = product;
+  document.getElementById('summaryQty').textContent = qty + '件';
+  document.getElementById('summaryTotal').textContent = '¥' + total;
+  document.getElementById('summaryName').textContent = name || '—';
+  document.getElementById('summaryPhone').textContent = phone || '—';
+  summary.style.display = 'block';
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  if (!data.name || !data.phone || !data.product) {
+    alert('请填写必填项：姓名、电话、产品');
+    return;
+  }
+
+  // 提取价格
+  const priceMatch = data.product.match(/¥(\d+)/);
+  const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+  const qty = parseInt(data.quantity);
+  const total = price * qty;
+
+  // 显示弹窗
+  const modal = document.getElementById('orderModal');
+  const modalSummary = document.getElementById('modalSummary');
+  modalSummary.innerHTML = `
+    <div class="order-summary-row"><span class="label">产品</span><span class="value">${data.product}</span></div>
+    <div class="order-summary-row"><span class="label">数量</span><span class="value">${qty}件</span></div>
+    <div class="order-summary-row"><span class="label">姓名</span><span class="value">${data.name}</span></div>
+    <div class="order-summary-row"><span class="label">电话</span><span class="value">${data.phone}</span></div>
+    ${data.city ? `<div class="order-summary-row"><span class="label">城市</span><span class="value">${data.city}</span></div>` : ''}
+    ${data.address ? `<div class="order-summary-row"><span class="label">地址</span><span class="value">${data.address}</span></div>` : ''}
+    ${data.note ? `<div class="order-summary-row"><span class="label">备注</span><span class="value">${data.note}</span></div>` : ''}
+    <div class="order-summary-row total"><span class="label">预估金额</span><span class="value">¥${total}</span></div>
+  `;
+  modal.classList.add('show');
+  form.reset();
+  document.getElementById('orderSummary').style.display = 'none';
+}
+
+function closeModal() {
+  document.getElementById('orderModal').classList.remove('show');
+}
+
+// 点击遮罩关闭
+document.getElementById('orderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  renderGifts();
+
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+    const sticky = document.getElementById('stickyBar');
+    sticky.style.display = window.scrollY > 500 ? 'flex' : 'none';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+});
+
+function toggleMenu() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+</script>
+</body>
+</html>
