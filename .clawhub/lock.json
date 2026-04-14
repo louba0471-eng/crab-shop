@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "skills": {
+    "multi-search-engine": {
+      "version": "2.0.1",
+      "installedAt": 1775293232784
+    },
+    "self-improving": {
+      "version": "1.2.16",
+      "installedAt": 1775308541188
+    },
+    "lossless-claw": {
+      "version": "1.0.1",
+      "installedAt": 1775312444003
+    },
+    "agent-browser-clawdbot": {
+      "version": "0.1.0",
+      "installedAt": 1775315854362
+    },
+    "douyin-video": {
+      "version": "1.0.3",
+      "installedAt": 1775663241589
+    },
+    "skill-creator-agent": {
+      "version": "1.0.0",
+      "installedAt": 1775697676258
+    },
+    "ralph-mode": {
+      "version": "1.2.0",
+      "installedAt": 1775697682125
+    },
+    "claude-code-code-simplifier": {
+      "version": "1.0.0",
+      "installedAt": 1775697688218
+    },
+    "find-skills-skill": {
+      "version": "1.0.0",
+      "installedAt": 1775697693696
+    },
+    "ui-ux-pro-max": {
+      "version": "0.1.0",
+      "installedAt": 1775697700103
+    },
+    "enterprise-ai-diagnosis": {
+      "version": "1.0.0",
+      "installedAt": 1775756858600
+    },
+    "the-minimalist-entrepreneur": {
+      "version": "1.0.0",
+      "installedAt": 1775901191002
+    },
+    "find-community": {
+      "version": "1.0.3",
+      "installedAt": 1775901231989
+    },
+    "validate-idea": {
+      "version": "1.0.0",
+      "installedAt": 1775901234421
+    },
+    "minimalist-review": {
+      "version": "1.0.3",
+      "installedAt": 1775901257570
+    },
+    "me-mvp": {
+      "version": "1.0.0",
+      "installedAt": 1775901273331
+    },
+    "company-values": {
+      "version": "1.0.3",
+      "installedAt": 1775901281297
+    },
+    "yh-minimax-docx": {
+      "version": "1.0.0",
+      "installedAt": 1776004523633
+    },
+    "pptx-generator": {
+      "version": "1.0.2",
+      "installedAt": 1776004529735
+    },
+    "minimax-xlsx": {
+      "version": "1.0.0",
+      "installedAt": 1776004535827
+    },
+    "wechat-article-publisher": {
+      "version": "1.0.0",
+      "installedAt": 1776041038435
+    }
+  }
+}
