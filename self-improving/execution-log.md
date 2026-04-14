@@ -33,6 +33,32 @@
 
 <!-- 新记录追加在下方 -->
 
+## [system-check] [2026-04-14T10:12:00+08:00] [success]
+
+### 任务描述
+Phase 2 自校正闭环验证 — 模拟完整心跳周期，验证 THINK 经验查询 + LEARN 执行记录是否正常
+
+### 执行过程
+1. SENSE: 读取 heartbeat-state.md，确认 last_state=LEARNED，需执行完整5步
+2. THINK: 查询 experience-index.md + domains/system.md，判定"系统状态检查"为未知类型，触发探索模式
+3. EXECUTE: 执行 git log 检查 + 系统状态验证
+4. EVALUATE: 执行成功，git 日志正常（最近2次 commit），无错误
+5. LEARN: 更新 heartbeat-state.md（本次结果）
+
+### 结果评估
+- 预期：经验库读写正常，闭环无断裂
+- 实际：THINK 查询experience-index成功，LEARN 写入 heartbeat-state 成功
+- 差距：无
+
+### 经验教训
+- 经验库查询逻辑正确，unknown 任务类型正确触发探索模式标识
+- 验证结论：Phase 2 自校正机制验证通过
+
+### 关联领域
+system
+
+---
+
 ## [architecture-upgrade] [2026-04-14] [success]
 
 ### 任务描述
