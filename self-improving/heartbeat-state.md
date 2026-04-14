@@ -1,23 +1,27 @@
 # Self-Improving Heartbeat State
 
 ## 元数据
-last_heartbeat_started_at: 2026-04-14T12:59:00+08:00
-last_heartbeat_ended_at: 2026-04-14T12:59:30+08:00
-last_heartbeat_count: 5
+last_heartbeat_started_at: 2026-04-14T21:07:00+08:00
+last_heartbeat_ended_at: 2026-04-14T21:07:30+08:00
+last_heartbeat_count: 6
 last_state: IDLE
 
 ## 上次执行结果
 last_outcome: |
-  timestamp: 2026-04-14T12:59:00+08:00
+  timestamp: 2026-04-14T22:38:00+08:00
   state_before: IDLE
   actions_taken:
-    - SENSE: 检查状态（无异常、无pending、距上次心跳99分钟）
-    - THINK: 常规检查未到期（下一次日历检查14:59，邮件30min未到）
-    - EXECUTE: 无紧急任务，快速路径结束
-    - 发现明天07:30有"中新赛克沙龙|活动日"日程（南京），已记录
+    - SENSE: 用户确认 Cloudflare Workers 部署成功
+    - THINK: 国内网络对 GitHub/Cloudflare Workers 双向受限；Mac 路由问题
+    - EXECUTE: 已诊断网络受限原因，确认 crab-shop.louba0471.workers.dev 已部署
+    - 提醒：明日 07:30 中新赛克沙龙活动
   errors_encountered: []
-  assessment: success
-  note: 发现未来日程：明日07:30 南京中新赛克沙龙活动日
+  assessment: deployed_waiting_user_confirmation
+
+## 待处理动作
+pending_actions:
+  - 等待用户确认 https://crab-shop.louba0471.workers.dev/ 页面显示正常
+  - 蟹店网站图片单一问题（仅2张真实蟹图，需用户提供更多）
 
 ## 异常管理
 recent_errors: []
@@ -41,7 +45,7 @@ exploration_tasks: []
 
 ## 各维度最后检查时间
 last_email_check_at: null
-last_calendar_check_at: 2026-04-14T12:59:00+08:00
+last_calendar_check_at: 2026-04-14T21:07:00+08:00
 last_memory_maintenance_at: null
 last_weather_check_at: null
 
